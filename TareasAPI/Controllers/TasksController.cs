@@ -24,8 +24,7 @@ namespace TareasAPI.Controllers
                                                   DateTime? fechaInicio, DateTime? fechaFin,
                                                   int page = 1, int pageSize = 20)
         {
-            var tareas = await _service.GetFilteredAsync(prioridad, estatus, usuarioId, fechaInicio, fechaFin, page, pageSize);
-            var totalRecords = tareas.Count();
+            var (tareas, totalRecords) = await _service.GetFilteredAsync(prioridad, estatus, usuarioId, fechaInicio, fechaFin, page, pageSize);
             var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
 
             var response = new ApiResponse<Tarea>

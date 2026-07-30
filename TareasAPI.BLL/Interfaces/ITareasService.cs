@@ -10,7 +10,7 @@ namespace TareasBLL.Interfaces
 {
     public interface ITareasService
     {
-        Task<IEnumerable<Tarea>> GetFilteredAsync(string? prioridad, string? estatus, int? usuarioId,
+        Task<(IEnumerable<Tarea> Items, int TotalRecords)> GetFilteredAsync(string? prioridad, string? estatus, int? usuarioId,
                                                    DateTime? fechaInicio, DateTime? fechaFin,
                                                    int page, int pageSize);
         Task<Tarea?> GetByIdAsync(int id);
