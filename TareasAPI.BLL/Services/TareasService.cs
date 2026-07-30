@@ -14,7 +14,7 @@ namespace TareasBLL.Services
             _repo = repo;
         }
 
-        public async Task<IEnumerable<Tarea>> GetFilteredAsync(
+        public async Task<(IEnumerable<Tarea> Items, int TotalRecords)> GetFilteredAsync(
             string? prioridad, string? estatus, int? usuarioId,
             DateTime? fechaInicio, DateTime? fechaFin,
             int page, int pageSize)
@@ -36,10 +36,14 @@ namespace TareasBLL.Services
             if (fechaFin.HasValue)
                 query = query.Where(t => t.FechaFinalizacion <= fechaFin.Value);
 
-            return query
+            var totalRecords = query.Count();
+
+            var items = query
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
+
+            return (items, totalRecords);
         }
 
         public async Task<Tarea?> GetByIdAsync(int id)
